@@ -29,6 +29,7 @@ def sigmoid(z):
 # eps is a smooth parameter
 def loss(yhat, y):
   eps = 1e-10
+
   return - np.sum( y*np.log(yhat+eps) + (1-y)*np.log(1-yhat+eps))
 
 M = 3
