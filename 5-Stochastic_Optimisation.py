@@ -8,7 +8,6 @@ from torchvision import models,transforms
 from torchvision.datasets import MNIST
 from torch.utils.data.sampler import SubsetRandomSampler
 
-# GENERATE MNIST DATASET - no need to edit
 def mnist(batch_sz, valid_size=0.2, shuffle=True, random_seed=2000):
     num_classes = 10
     transform_train = transforms.Compose([
@@ -46,10 +45,10 @@ def mnist(batch_sz, valid_size=0.2, shuffle=True, random_seed=2000):
 
     return train_loader, valid_loader, test_loader
 
-batch_size = 64 # this is batch size i.e. the number of rows in a batch of data, feel free try other values {32, 64, 128, 256, 512}
+batch_size = 64 
 
 input_dimension = 1 * 28 * 28 # MNIST images are grey scale images 28 pixels wide and high 
-d = input_dimension # if you prefer a shorter varible name
+d = input_dimension 
 
 number_of_classes = 10 # number of class of MNIST data set C = {0,1,2,3,4,5,6,7,8,9}
 
@@ -87,8 +86,6 @@ def index_to_one_hot(y, classes=10):
 y = torch.randint(10,(10,))
 print('y',y)
 print('y',index_to_one_hot(y))
-
-# As before please complete the following two functions. Remember here X and y are batches of b examles.
 
 def CE_loss(X, ystar, w):
   m = torch.matmul(X,w)
@@ -130,7 +127,7 @@ def test(w, valid_loader): # function that evaluates loss on vaildation set
       total_num += X.size()[0]
     return float(total_loss/total_num), float(total_correct/total_num * 100)
 
-with torch.no_grad(): # in this exersize we will not use autograd you will have calucated gradent
+with torch.no_grad():
 
   # fixing a device to run the codes on
   device = torch.device("cuda:0")
@@ -146,11 +143,11 @@ with torch.no_grad(): # in this exersize we will not use autograd you will have 
   for i in range(num_epochs):
     total_loss, total_correct, total_num = 0, 0, 0 
     for batch in train_loader:
-      #extractign data and labels from batch
+      #extracting data and labels from batch
       X,y = batch[0].to(device).view(batch[0].size()[0],input_dimension), batch[1].to(device)
       Y = index_to_one_hot(y, classes=10)      
       # ----------------------------
-      # Optimisation -  Your code here 
+      # Optimisation 
       m = m*mu - eta*grad_func(X, Y, w)
       w = w + m
       # ----------------------------
@@ -175,7 +172,6 @@ with torch.no_grad(): # in this exersize we will not use autograd you will have 
     # Adjust the learning rate
     eta *= 0.9
     
-    # plot stuff - reuse this cell for plotting bonus material too.
 f, axs = plt.subplots(2,2)
 axs[0,0].plot(np.arange(len(sgd_train_losses)),sgd_train_losses, 'red')
 axs[0,0].plot(np.arange(len(opt_train_losses)),opt_train_losses, 'blue')
@@ -194,7 +190,7 @@ axs[1,1].plot(np.arange(len(opt_val_acc)),opt_val_acc, 'blue')
 axs[1,1].plot(np.arange(len(adam_val_acc)),adam_val_acc, 'black')
 axs[1,1].set_ylabel('val acc')
 
-# We can visualise the learnt weights (one for each class) as images by reshapeing into 28x28 grids
+# Visualise the learnt weights (one for each class) as images by reshapeing into 28x28 grids
 
 w_cpu = w.cpu().clone()
 print(w_cpu.size())
@@ -207,7 +203,7 @@ for k in range(h):
   axs[k].set_title(k)
   axs[k].axis("off")
   
- with torch.no_grad(): # in this exersize we will not use autograd you will have calucated gradent
+ with torch.no_grad():
 
   # fixing a device to run the codes on
   device = torch.device("cuda:0")
@@ -226,10 +222,6 @@ for k in range(h):
       Y = index_to_one_hot(y, classes=10)      
       # ----------------------------
       # Optimisation TODO
-
-
-
-
       # ----------------------------
       # track loss and accuracy after every step
       loss_train = CE_loss(X, Y, w)
@@ -252,7 +244,7 @@ for k in range(h):
     # Adjust the learning rate
     eta *= 0.9 
     
-with torch.no_grad(): # in this exersize we will not use autograd you will have calucated gradent
+with torch.no_grad():
 
   # fixing a device to run the codes on
   device = torch.device("cuda:0")
@@ -268,15 +260,11 @@ with torch.no_grad(): # in this exersize we will not use autograd you will have 
   for i in range(num_epochs):
     total_loss, total_correct, total_num = 0, 0, 0 
     for batch in train_loader:
-      #extractign data and labels from batch
+      #extracting data and labels from batch
       X,y = batch[0].to(device).view(batch[0].size()[0],input_dimension), batch[1].to(device)
       Y = index_to_one_hot(y, classes=10)      
       # ----------------------------
       # Optimisation -  TODO 
-
-
-
-
       # ----------------------------
       # track loss and accuracy after every step
       loss_train = CE_loss(X, Y, w)
