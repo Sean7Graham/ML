@@ -34,6 +34,6 @@ print(X.shape)
 A = X.T.dot(X)
 b = X.T.dot(y)
 
-# Solve the regression on (X, y) and visualize the fitted function 
+# Solve the regression on (X, y) and visualize the fitted function
 z = np.linalg.solve(A, b)
 plt.plot(x, x * z[0] + z[1])
